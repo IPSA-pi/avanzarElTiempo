@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avanzar el tiempo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Major+Mono+Display&family=Space+Mono:wght@700&display=swap" rel="stylesheet"> 
+
+    <script>   
+    
+        window.onload = function() {
+            reloj()
+        }
+    
+        function reloj() {            
+            let d = new Date();
+            let h = d.getHours();
+            let m = d.getMinutes();
+            let s = d.getSeconds();
+            let ms = d.getMilliseconds();
+
+            let time = [h, m, s];
+            
+            let timeF = time.map(t => t < 10 ? t = '0' + t : t = t);
+            [h, m, s] = timeF;
+
+            let hora = `${h}:${m}:${s}`;
+            
+            document.getElementById('laHora').innerHTML = hora;
+
+            function relokB() {
+                hora = `${h}${m}${s}`;
+                let hiloB = hora.split("").map((n) => n.charCodeAt(0).toString(2).slice(2));
+
+                let horaB = '';
+
+                for (let fila of hiloB) {
+                    let celda = fila.split("")
+                    .map(celda => celda == 0 
+                        ? celda = '<div class="celda cero"></div>' 
+                        : celda = '<div class="celda uno"></div>');                  
+                    horaB = horaB + `<div class="fila">${celda.join("")}</div>`;
+                }          
+                document.getElementById('relokB').innerHTML = horaB;
+            }
+            relokB();
+        }        
+    </script>
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;            
+            font-family: 'Major Mono Display', monospace;
+            font-family: 'Space Mono', monospace;
+        }
+
+        h1{
+            padding: 1rem;
+            text-align: center;
+            font-weight: 300;
+            font-size: 3rem;
+            line-height: 4rem;
+        }
+        .relokC {
+            display: flex;
+            flex-flow: column;
+            align-items: center;
+        }
+        #laHora {
+            font-size: 3rem;
+        }
+        #relokB {      
+            border: solid black 1px;      
+            width: 360px;
+            margin:auto;
+            display: flex;
+            margin: 2rem;
+            justify-content: center;
+        }
+        .fila{
+            width: 360px;
+            height: 240px;
+            flex-flow: column wrap;            
+        }
+        .celda {
+            width: 60px;
+            height: 60px;
+        }
+        .uno {
+            background-color: black;
+        }
+        .dos {
+            background-color: white;
+        }
+        button {
+            background-color: black;            
+            color: white;
+            padding: 1.5rem;
+            font-size: 1rem;
+            margin-top: 2rem;
+            border-radius: 100px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- <h1>El tiempo no existe, son las papas</h1> -->
+    <h1>Am@ y esclav@ del univers@</h1>
+
+    <div class="relokC">
+        <div id="relokB"></div> 
+        <p id="laHora">--:--:--</p>       
+        <button onclick="reloj()">No pierdas el camino</button>
+    </div>
+
+</body>
+</html>
